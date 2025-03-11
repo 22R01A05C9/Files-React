@@ -1,12 +1,44 @@
-# React + Vite
+# Files - Secure File Sharing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+Files is a web application that allows users to upload and download files using unique codes online. It offers a simple and secure way to share files across devices.
 
-Currently, two official plugins are available:
+## Features
+- Upload files and receive a unique code for retrieval
+- Custom codes for identifying files
+- Auto-delete files upon download for privacy
+- Secure and efficient file handling with React, Node.js, and MongoDB
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- **Frontend:** React
+- **Backend:** Node.js, Express
+- **Database:** MongoDB
 
-## Expanding the ESLint configuration
+## Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/22R01A05C9/Files-React.git
+   cd files
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Set up environment variables (`.env` file):
+   ```sh
+   MONGO_URI=your_mongodb_connection_string
+   PORT=5000
+   API_KEY=your_api_key
+   ```
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Usage
+- Upload a file and receive a unique code.
+- Use the code to download the file on another device.
+- Optionally, set a custom code for easier identification.
+
+## Live Demo
+[Try it here](https://saiteja.site/files)

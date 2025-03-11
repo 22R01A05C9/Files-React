@@ -1,0 +1,23 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", serif;
+	-webkit-tap-highlight-color: transparent;
+	user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+:root {
+	--blue: #0ea5e9;
+	--blue-dim: #0ea5e9ed;
+}
+
+html{
+	scroll-behavior: smooth;
+}

@@ -58,6 +58,27 @@ module.exports = async function (app) {
     }
 
 
+    app.post("/files/cverify",(req,res)=>{
+        let ccode = req.body.ccode;
+        if(!ccode){
+            res.json({status:false,message:"No Code Provided"})
+            return;
+        }
+        let regexp = /^[0-9]{4}$/
+        if(!regexp.test(ccode)){
+            res.json({status:false, message:"Invalid Code"})
+            return;
+        }
+        getfiledata(parseInt(ccode)).then((data)=>{
+            if(data){
+                res.json({status:true, message:"Code Exists"})
+            }else{
+                res.json({status:false, message:"Code Available"})
+            }
+        })
+    })
+
+
     app.post("/files/upload", upload.single("file"), function (req, res) {
         try {
             let filestr = req.file?.destination.split("/")[2]
@@ -129,7 +150,7 @@ module.exports = async function (app) {
                 })
             } else {
                 //add the link after creating frontend
-                res.redirect("https://saiteja.fun")
+                res.json({ status: false, message: "No File Found" })
             }
         })
     })

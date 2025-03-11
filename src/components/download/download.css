@@ -1,0 +1,15 @@
+.download{
+    width: 50vw;
+}
+
+.download h3{
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+
+.download .dinput input{
+    width: 40px;
+    height: 50px;
+    margin: 10px;
+}

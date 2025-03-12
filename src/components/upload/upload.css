@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    gap:20px;
 }
 
 .upload .img{
@@ -24,10 +25,77 @@
     display: none;
 }
 
-.upload .options, .upload .output, .upload .status, .upload .submit{
+.options .disnone, .disnone{
     display: none;
 }
 
 .upload .visible{
     display: block;
+}
+
+.options{
+    width: 50vw;
+}
+
+.options p{
+    display: inline;
+    font-size: 1.1rem;
+}
+
+.optionstitle{
+    width: inherit;
+    display: flex;
+    align-items: center;
+    gap:2px;
+    padding: 0 0 10px 8vw;
+    cursor: pointer;
+}
+
+.optionstitle svg{
+    height: 20px;
+    width: 20px;
+    rotate: 90deg;
+    transition: rotate 0.2s ease;
+} 
+
+.optionstitle svg.normal{
+    rotate: 0deg;
+}
+
+.dod{
+    padding-left: 9vw;
+    display: flex;
+    align-items: center;
+    gap:4px;
+}
+
+.ccode{
+    padding: 0 0 10px 9vw;
+}
+
+.ccode .chead{
+    display: flex;
+    align-items: center;
+    gap:4px;
+}
+
+input[type="checkbox"]{
+    height: 16px;
+    width: 16px;
+}
+
+.ccode label, .dod label{
+    cursor: pointer;
+}
+
+.ccode .chead:has(input:checked) + input{
+    display: block;
+}
+
+.ccode input[type="number"]{
+    margin: 5px 0 0 3vw;
+    padding: 5px 5px 5px 10px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
 }

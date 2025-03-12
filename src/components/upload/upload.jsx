@@ -9,6 +9,7 @@ function Upload(){
         <div className="upload">
             <Img />
             <Options />
+            <Submit />
         </div>
     )
 }

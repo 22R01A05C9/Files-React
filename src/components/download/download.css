@@ -1,12 +1,15 @@
 .download{
     width: 50vw;
+    padding: 25vh 15vw 25vw 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
 }
 
 .download h3{
     font-size: 1.5rem;
-    text-align: center;
 }
-
 
 .download .dinput input{
     width: 40px;
@@ -16,4 +19,39 @@
     border: 1px solid black;
     font-size: 1.5rem;
     text-align: center;
+    background-color: #dfdfdf;
+}
+
+.download .dinput input:not(:disabled){
+    background-color: #f5f5f5;
+}
+
+.download p{
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.download .submit button{
+    background-color: var(--blue);
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px;
+    transition: all 0.2s ease;
+}
+
+.download .submit button:not(:disabled):hover{
+    transform: scale(1.02);
+    background-color: var(--blue-dim);
+    font-size: 1.101rem;
+    cursor: pointer;
+
+}
+
+.download .submit button:disabled{
+    background-color: #0ea5e987;
+    border: none;
 }

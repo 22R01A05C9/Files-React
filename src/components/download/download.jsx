@@ -7,7 +7,7 @@ function Download(){
             <p>Enter Code To Download File</p>
             <Cinput />
             <div className="submit">
-                <button disabled>Submit</button>
+                <button disabled>Download</button>
             </div>
         </div>
     )

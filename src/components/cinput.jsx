@@ -1,4 +1,4 @@
-function Cinput(){
+function Cinput({submit}){
     const inp = (e)=>{
         document.querySelector(".download .submit button").disabled = true
         let value = e.target.value.trim()
@@ -13,7 +13,7 @@ function Cinput(){
             next.disabled = false
             next.focus()
         }else{
-            document.querySelector(".download .submit button").disabled = false
+            document.querySelector(".download .submit button").removeAttribute("disabled")
         }
     }
     const kdown = (e)=>{
@@ -29,6 +29,8 @@ function Cinput(){
                 prev.disabled = false
                 prev.focus()
             }
+        }else if(e.key == "Enter" && document.querySelector(".download .submit button").disabled == false){
+            submit()
         }
     }
     return(

@@ -1,3 +1,33 @@
 .upload{
     width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.upload .img{
+    text-align: center;
+    width: fit-content;
+    border: 1px solid #0000004d;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #00000008;
+    cursor: pointer;
+}
+.upload .img img{
+    height: 150px;
+    margin: 20px;
+}
+
+.upload .img input{
+    display: none;
+}
+
+.upload .options, .upload .output, .upload .status, .upload .submit{
+    display: none;
+}
+
+.upload .visible{
+    display: block;
 }

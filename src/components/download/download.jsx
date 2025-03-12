@@ -1,5 +1,5 @@
 import "./download.css"
-import Cinput from "../cinput"
+import Cinput from "./cinput";
 import { useEffect } from "react";
 function Download(){
     const download = ()=>{

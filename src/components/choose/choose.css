@@ -3,9 +3,9 @@
     padding: 8px;
     margin: 10px;
     justify-content: space-around;
-    border: 2px solid #0000003d;
+    border: 2px solid var(--files-choose-border);
     border-radius: 10px;
-    background-color: #ededed;
+    background-color: var(--files-choose-back);
 }
 
 .choose p{
@@ -22,8 +22,8 @@
 }
 
 .choose .active{
-    background-color: white;
-    box-shadow: 0 0 20px 1px #f0f0f0;
+    background-color: var(--files-choose-active);
+    box-shadow: 0 0 20px 1px var(--files-choose-shadow);
 }
 
 .choose + div.files .chooseshow{

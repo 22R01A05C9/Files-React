@@ -5,13 +5,17 @@ function Options({setccodestatus}) {
         e.target.classList.remove("red")
         e.target.classList.remove("green")
         setccodestatus(false)
+        let val = e.target.value;
+        if(val.length > 4){
+            e.target.value = val.slice(0,4)
+        }
     }
     const verifycc = () => {
         let ccode = document.querySelector("#ccode");
         let regexp = /^[0-9]{4}$/;
         let code = ccode.value;
         if(!regexp.test(code)){
-            Toast("Invalid Code","error")
+            Toast("Invalid Code","error",localStorage.getItem("theme") || "dark")
             ccode.classList.add("red")
             return;
         }
@@ -26,11 +30,11 @@ function Options({setccodestatus}) {
         }).then(res=>res.json()).then((res)=>{
             setccodestatus(res.status)
             if(res.status === false){
-                Toast(res.message,"warn");
+                Toast(res.message,"warn",localStorage.getItem("theme") || "dark");
                 ccode.classList.add("red")
                 ccode.classList.remove("green")
             }else{
-                Toast(res.message,"success")
+                Toast(res.message,"success",localStorage.getItem("theme") || "dark")
                 ccode.classList.remove("red")
                 ccode.classList.add("green")
             }
@@ -49,7 +53,7 @@ function Options({setccodestatus}) {
     return (
         <div className="options disnone">
             <div className="optionstitle show" onClick={clickedoptions}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1f1f1f"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="var(--back)"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" /></svg>
                 <p>Options</p>
             </div>
             <div className="ccode">

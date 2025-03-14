@@ -13,7 +13,7 @@ function Output() {
         let copydata = e.target.getAttribute("aria-data")
         if(!navigator.clipboard) copytext(copydata);
         else navigator.clipboard.writeText(copydata);
-        Toast(e.target.innerHTML.slice(-1,-4) + " Copied To Clipboard","success")
+        Toast(e.target.innerHTML.slice(-1,-4) + " Copied To Clipboard","success",localStorage.getItem("theme") || "dark")
     }
     return (
         <div className="output disnone">

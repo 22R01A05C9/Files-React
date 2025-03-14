@@ -14,7 +14,7 @@ function Cinput({submit}){
                 }
             })
         }else{
-            Toast("Pasting Invalid Code","warn")
+            Toast("Pasting Invalid Code","warn",localStorage.getItem("theme") || "dark")
             e.preventDefault()
         }        
     }

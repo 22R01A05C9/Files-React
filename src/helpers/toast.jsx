@@ -8,8 +8,8 @@ const options = {
     draggable: true
 }
 
-const Toast = (message,mode) => {
-    toast[mode](message,options)
+const Toast = (message,mode,theme) => {
+    toast[mode](message,{...options, theme:theme})
 }
 
 export default Toast

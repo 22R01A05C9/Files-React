@@ -13,7 +13,8 @@
     border: 1px solid #0000004d;
     border-radius: 10px;
     padding: 10px;
-    background-color: #00000008;
+    /* background-color: #00000008; */
+    background-color: var(--files-upload-back);
     cursor: pointer;
 }
 .upload .img img{
@@ -140,15 +141,20 @@ input[type="checkbox"]{
     margin: 5px 0 0 3vw;
     padding: 5px 5px 5px 10px;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--back);
+    background-color: transparent;
     outline: none;
 }
 
+.ccode input[type="number"]::placeholder{
+    color: var(--text);
+}
+
 .status{
-    background-color: #35b7f1b3;
+    background-color: var(--files-status-back);
     padding: 14px;
     border-radius: 10px;
-    border: 1px solid var(--blue);
+    border: 1px solid var(--files-status-border);
 }
 
 .status .info{

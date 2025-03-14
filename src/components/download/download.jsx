@@ -13,7 +13,7 @@ function Download(){
         })
         let exp = /^[0-9]{4}$/
         if(!exp.test(code)){
-            Toast("Invalid Code","error")
+            Toast("Invalid Code","error",localStorage.getItem("theme") || "dark")
             return;
         }
         let data = JSON.stringify({id:code})
@@ -34,7 +34,7 @@ function Download(){
                 a.href = redirect
                 a.click()
             }else{
-                Toast(data.message,"error")
+                Toast(data.message,"error",localStorage.getItem("theme") || "dark")
             }
         })
     }

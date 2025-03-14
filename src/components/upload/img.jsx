@@ -4,7 +4,7 @@ import Toast from "../../helpers/toast";
 function Img({ setFile }) {
     const uploadedfile = (e) => {
         if ((e.target.files[0].size / 1000) > 25000) {
-            Toast("File Size Exceeded","error")
+            Toast("File Size Exceeded","error",localStorage.getItem("theme") || "dark")
             return
         } else {
             document.querySelector(".upload .options").classList.remove("disnone")

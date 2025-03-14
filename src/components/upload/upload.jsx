@@ -12,7 +12,7 @@ function Upload(){
     const [ccodestatus,setccodestatus] = useState(false)
 
     const uploaded = (res, ccinput, ccchecked, dod) => {
-        Toast("File Uploaded Succesfully!!","success")
+        Toast("File Uploaded Succesfully!!","success",localStorage.getItem("theme") || "dark")
         ccinput.value = ""
         ccinput.classList.remove("green")
         ccinput.classList.remove("red")
@@ -34,11 +34,11 @@ function Upload(){
         let ccinput = document.querySelector(".ccode #ccode")
         let dod = document.querySelector(".dod input")
         if(fileinp.files.length == 0){
-            Toast("No File Selected","error")
+            Toast("No File Selected","error",localStorage.getItem("theme") || "dark")
             return;
         }
         if(ccchecked.checked && !ccodestatus){
-            Toast("Custom Code Not Verified !!","error")
+            Toast("Custom Code Not Verified !!","error",localStorage.getItem("theme") || "dark")
             ccinput.focus()
             ccinput.classList.add("red")
             return;
@@ -60,7 +60,7 @@ function Upload(){
             if(res.status){
                 uploaded(res, ccinput, ccchecked, dod)
             }else{
-                Toast(res.message,"error")
+                Toast(res.message,"error",localStorage.getItem("theme") || "dark")
             }
         }
     }

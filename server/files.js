@@ -120,13 +120,13 @@ module.exports = async function (app) {
                     } else {
                         fileid = parseInt(customid)
                         let filename = req.file.originalname
-                        addfiledatatodb(fileid, filename, req.body.deleteondownload, filestr)
+                        addfiledatatodb(fileid, filename, deleteondownload, filestr)
                         res.json({ status: true, id: fileid, str: filestr })
                     }
                 })
             } else {
                 let filename = req.file.originalname
-                addfiledatatodb(fileid, filename, req.body.deleteondownload, filestr)
+                addfiledatatodb(fileid, filename, deleteondownload, filestr)
                 res.json({ status: true, id: fileid, str: filestr })
             }
 
@@ -146,6 +146,8 @@ module.exports = async function (app) {
                         return
                     } else if (data.deleteondownload === "true") {
                         fs.rm("./filesdb/" + id, { recursive: true, force: true }, () => { })
+                        let files = db.collection("files")
+                        files.deleteOne({ filestr: data.filestr })
                     }
                 })
             } else {

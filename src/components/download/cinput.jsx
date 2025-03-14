@@ -1,5 +1,4 @@
-import { toast } from "react-toastify";
-
+import Toast from "../../helpers/toast";
 function Cinput({submit}){
     const paste = (e)=>{
         let data = e.clipboardData.getData("text");
@@ -15,7 +14,7 @@ function Cinput({submit}){
                 }
             })
         }else{
-            toast.warn("Pasting Invalid Code")
+            Toast("Pasting Invalid Code","warn")
             e.preventDefault()
         }        
     }

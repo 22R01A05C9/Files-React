@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import Toast from "../../helpers/toast";
 
 function Options({setccodestatus}) {
     const ccodeinp = (e)=>{
@@ -11,7 +11,7 @@ function Options({setccodestatus}) {
         let regexp = /^[0-9]{4}$/;
         let code = ccode.value;
         if(!regexp.test(code)){
-            toast.error("Invalid Code")
+            Toast("Invalid Code","error")
             ccode.classList.add("red")
             return;
         }
@@ -26,11 +26,11 @@ function Options({setccodestatus}) {
         }).then(res=>res.json()).then((res)=>{
             setccodestatus(res.status)
             if(res.status === false){
-                toast.warn(res.message);
+                Toast(res.message,"warn");
                 ccode.classList.add("red")
                 ccode.classList.remove("green")
             }else{
-                toast.success(res.message)
+                Toast(res.message,"success")
                 ccode.classList.remove("red")
                 ccode.classList.add("green")
             }

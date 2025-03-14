@@ -2,7 +2,7 @@ import "./download.css"
 import Cinput from "./cinput";
 import { useEffect } from "react";
 import { AES } from "crypto-js";
-import { toast } from "react-toastify";
+import Toast from "../../helpers/toast";
 
 function Download(){
     const download = ()=>{
@@ -13,7 +13,7 @@ function Download(){
         })
         let exp = /^[0-9]{4}$/
         if(!exp.test(code)){
-            toast.error("Invalid Code")
+            Toast("Invalid Code","error")
             return;
         }
         let data = JSON.stringify({id:code})
@@ -34,7 +34,7 @@ function Download(){
                 a.href = redirect
                 a.click()
             }else{
-                toast.error(data.message)
+                Toast(data.message,"error")
             }
         })
     }

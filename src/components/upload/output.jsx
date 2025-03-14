@@ -1,13 +1,13 @@
-import { toast } from "react-toastify";
+import Toast from "../../helpers/toast";
 
 function Output({ data }) {
     const code = () => {
         navigator.clipboard.writeText(data?.id);
-        toast.success("Code Copied To Clipboard")
+        Toast("Code Copied To Clipboard","success")
     }
     const link = () => {
         navigator.clipboard.writeText(window.location.origin + "/api/files/download/" + data?.str);
-        toast.success("Link Copied To Clipboard")
+        Toast("Link Copied To Clipboard","success")
     }
     return (
         <div className="output disnone">

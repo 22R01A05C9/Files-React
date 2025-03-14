@@ -41,7 +41,7 @@ module.exports = async function (app) {
         setTimeout(() => {
             fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
             filesdb.deleteOne({ filestr: filestr })
-        }, 1000 * 60 * 120)
+        }, 1000 * 60 * process.env.FILES_MINUTES)
     }
 
     async function addfiledatatodb(fileid, filename, deleteondownload, filestr) {

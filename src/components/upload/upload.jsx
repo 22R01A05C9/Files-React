@@ -5,7 +5,7 @@ import Options from "./options"
 import Submit from "./submit"
 import Output from "./output"
 import { useState } from "react"
-import { toast } from "react-toastify"
+import Toast from "../../helpers/toast";
 
 function Upload(){
     const [file,setFile] = useState(null)
@@ -14,7 +14,7 @@ function Upload(){
     const [uploadeddata,setuploadeddata] = useState(null)
 
     const uploaded = (res, ccinput, ccchecked, dod) => {
-        toast.success("File Uploaded Succesfully!!")
+        Toast("File Uploaded Succesfully!!","success")
         ccinput.value = ""
         ccinput.classList.remove("green")
         ccinput.classList.remove("red")
@@ -32,11 +32,11 @@ function Upload(){
         let ccinput = document.querySelector(".ccode #ccode")
         let dod = document.querySelector(".dod input")
         if(fileinp.files.length == 0){
-            toast.error("No File Selected")
+            Toast("No File Selected","error")
             return;
         }
         if(ccchecked.checked && !ccodestatus){
-            toast.error("Custom Code Not Verified !!")
+            Toast("Custom Code Not Verified !!","error")
             ccinput.focus()
             ccinput.classList.add("red")
             return;
@@ -57,7 +57,7 @@ function Upload(){
             if(res.status){
                 uploaded(res, ccinput, ccchecked, dod)
             }else{
-                toast.error(res.message)
+                Toast(res.message,"error")
             }
         }
     }

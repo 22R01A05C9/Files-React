@@ -1,10 +1,10 @@
 import fileimg from "../../assets/fileupload.png"
-import { toast } from "react-toastify";
+import Toast from "../../helpers/toast";
 
 function Img({ setFile, setper }) {
     const uploadedfile = (e) => {
         if ((e.target.files[0].size / 1000) > 25000) {
-            toast.error("File Size Exceeded")
+            Toast("File Size Exceeded","error")
             return
         } else {
             document.querySelector(".upload .options").classList.remove("disnone")

@@ -10,8 +10,6 @@ import Toast from "../../helpers/toast";
 function Upload(){
     const [file,setFile] = useState(null)
     const [ccodestatus,setccodestatus] = useState(false)
-    const [per,setper] = useState(0)
-    const [uploadeddata,setuploadeddata] = useState(null)
 
     const uploaded = (res, ccinput, ccchecked, dod) => {
         Toast("File Uploaded Succesfully!!","success")
@@ -24,7 +22,11 @@ function Upload(){
         document.querySelector(".output").classList.remove("disnone")
         document.querySelector(".options").classList.add("disnone")
         document.querySelector(".upload .submit").classList.add("disnone")
-        setuploadeddata(res)
+        let output = document.querySelector(".output")
+        output.querySelector(".showcode strong").innerHTML = res.id
+        output.querySelector(".buttons button:nth-child(1)").setAttribute("aria-data", res.id)
+        let link = window.location.origin + "/api/files/download/" + res.str
+        output.querySelector(".buttons button:nth-child(2)").setAttribute("aria-data", link)
     }
     const submit = () =>{
         let fileinp = document.querySelector(".img input")
@@ -49,7 +51,8 @@ function Upload(){
         let xhr = new XMLHttpRequest();
         xhr.open("POST","/api/files/upload")
         xhr.upload.addEventListener("progress", (e)=>{
-            setper(parseInt(e.loaded/e.total * 100))
+            let per = parseInt(e.loaded/e.total * 100).toString()
+            document.querySelector(".progressouter .inner").style.width = `${per}%`
         })
         xhr.send(formdata)
         xhr.onload = () => {
@@ -63,11 +66,14 @@ function Upload(){
     }
     return(
         <div className="upload">
-            <Img setFile={setFile} setper={setper}/>
-            <Status file={file} pos={per}/>
-            <Options setccodestatus={setccodestatus}/>
-            <Submit submit={submit}/>
-            <Output data={uploadeddata}/>
+            <Img setFile={setFile}/>
+            <div className="file">
+                <Status file={file}/>
+                <Options setccodestatus={setccodestatus}/>
+                <Submit submit={submit}/>
+                <Output />
+            </div>
+            
         </div>
     )
 }

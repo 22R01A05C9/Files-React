@@ -1,5 +1,7 @@
-function Status({file,pos}) {
+function Status({file}) {
     let name,size;
+    let fileinp = document.querySelector(".img input")
+
     if(file){
         if(file.name.length > 16){
             let l = file.name.length
@@ -20,7 +22,7 @@ function Status({file,pos}) {
 
             
             <div className="progressouter">
-                <div className="inner" style={{width:`${pos}%`}}></div>
+                <div className="inner"></div>
             </div>
         </div>
     )

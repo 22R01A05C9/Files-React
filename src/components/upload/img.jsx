@@ -1,7 +1,7 @@
 import fileimg from "../../assets/fileupload.png"
 import Toast from "../../helpers/toast";
 
-function Img({ setFile, setper }) {
+function Img({ setFile }) {
     const uploadedfile = (e) => {
         if ((e.target.files[0].size / 1000) > 25000) {
             Toast("File Size Exceeded","error")
@@ -13,7 +13,11 @@ function Img({ setFile, setper }) {
             document.querySelector(".upload .submit").classList.remove("disnone")
             document.querySelector(".upload .output").classList.add("disnone")
             setFile(e.target.files[0])
-            setper(0)
+            document.querySelector(".upload .status .inner").style.width = "0%"
+            document.querySelectorAll(".output .buttons button").forEach((item)=>{
+                console.log(item);
+                item.removeAttribute("aria-data")
+            })
         }
     }
     return (

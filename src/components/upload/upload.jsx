@@ -11,6 +11,21 @@ function Upload(){
     const [file,setFile] = useState(null)
     const [ccodestatus,setccodestatus] = useState(false)
     const [per,setper] = useState(0)
+    const [uploadeddata,setuploadeddata] = useState(null)
+
+    const uploaded = (res, ccinput, ccchecked, dod) => {
+        toast.success("File Uploaded Succesfully!!")
+        ccinput.value = ""
+        ccinput.classList.remove("green")
+        ccinput.classList.remove("red")
+        ccchecked.checked = false
+        dod.checked = false
+        setccodestatus(false)
+        document.querySelector(".output").classList.remove("disnone")
+        document.querySelector(".options").classList.add("disnone")
+        document.querySelector(".upload .submit").classList.add("disnone")
+        setuploadeddata(res)
+    }
     const submit = () =>{
         let fileinp = document.querySelector(".img input")
         let ccchecked = document.querySelector(".ccode .chead input")
@@ -34,32 +49,25 @@ function Upload(){
         let xhr = new XMLHttpRequest();
         xhr.open("POST","/api/files/upload")
         xhr.upload.addEventListener("progress", (e)=>{
-            let per = parseInt(e.loaded/e.total * 100)
-            console.log(per);
-            setper(per)
+            setper(parseInt(e.loaded/e.total * 100))
         })
         xhr.send(formdata)
         xhr.onload = () => {
             let res = JSON.parse(xhr.response)
             if(res.status){
-                console.log();
-                toast.success("File Uploaded Succesfully!!")
-                setFile(null)
-                ccinput.value = ""
-                ccinput.classList.remove("green")
-                ccinput.classList.remove("red")
-                ccchecked.checked = false
-                dod.checked = false
-                setccodestatus(false)
+                uploaded(res, ccinput, ccchecked, dod)
+            }else{
+                toast.error(res.message)
             }
         }
     }
     return(
         <div className="upload">
-            <Img setFile={setFile}/>
+            <Img setFile={setFile} setper={setper}/>
             <Status file={file} pos={per}/>
             <Options setccodestatus={setccodestatus}/>
             <Submit submit={submit}/>
+            <Output data={uploadeddata}/>
         </div>
     )
 }

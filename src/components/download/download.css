@@ -32,7 +32,7 @@
     margin-top: 10px;
 }
 
-.submit button{
+.submit button, .output button{
     background-color: var(--blue);
     outline: none;
     border: none;
@@ -43,7 +43,7 @@
     transition: all 0.2s ease;
 }
 
-.submit button:not(:disabled):hover{
+.submit button:not(:disabled):hover, .output button:hover{
     transform: scale(1.02);
     background-color: var(--blue-dim);
     font-size: 1.101rem;

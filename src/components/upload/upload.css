@@ -181,3 +181,13 @@ input[type="checkbox"]{
 .upload .show ~ div{
     display: block;
 }
+
+.output p{
+    text-align: center;
+}
+
+.output .buttons{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}

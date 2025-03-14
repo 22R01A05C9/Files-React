@@ -21,6 +21,15 @@
     margin: 20px;
 }
 
+.upload .less{
+    padding: 10px 40px;
+}
+
+.upload .less img{
+    height: 90px;
+    margin: 10px;
+}
+
 .upload .img input{
     display: none;
 }
@@ -34,7 +43,8 @@
 }
 
 .options{
-    width: 50vw;
+    width: 30vw;
+
 }
 
 .options p{
@@ -43,11 +53,9 @@
 }
 
 .optionstitle{
-    width: inherit;
     display: flex;
     align-items: center;
     gap:2px;
-    padding: 0 0 10px 8vw;
     cursor: pointer;
 }
 
@@ -62,15 +70,15 @@
     rotate: 0deg;
 }
 
-.dod{
-    padding-left: 9vw;
+.ccode, .dod{
+    display: none;
+    margin: 6px 0 0 15px;
+}
+
+.upload .show ~ .dod{
     display: flex;
     align-items: center;
     gap:4px;
-}
-
-.ccode{
-    padding: 0 0 10px 9vw;
 }
 
 .ccode .chead{
@@ -88,8 +96,42 @@ input[type="checkbox"]{
     cursor: pointer;
 }
 
-.ccode .chead:has(input:checked) + input{
+.ccode .chead:has(input:checked) + div{
     display: block;
+}
+
+.cbody{
+    display: none;
+}
+
+.red::placeholder{
+    color:red;
+}
+
+.options .ccode input.red{
+    border-bottom: 1px solid red;
+    color:red;
+}
+
+.options .ccode input.green{
+    border-bottom: 1px solid green;
+    color: green;
+}
+
+.cbody button{
+    border-radius: 10px;
+    background-color: var(--blue);
+    padding: 5px 10px;
+    outline: none;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.cbody button:hover{
+    transform: scale(1.02);
 }
 
 .ccode input[type="number"]{
@@ -98,4 +140,44 @@ input[type="checkbox"]{
     border: none;
     border-bottom: 1px solid black;
     outline: none;
+}
+
+.status{
+    width: 30vw;
+    background-color: #35b7f1b3;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid var(--blue);
+}
+
+.status .info{
+    display: flex;
+    justify-content: space-around;
+}
+
+.status .info p{
+    display: inline;
+}
+
+.progressouter{
+    height: 14px;
+    border-radius: 10px;
+    width: 100%;
+    padding: 2px;
+    text-align: center;
+    background-color: white;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progressouter .inner{
+    height: 10px;
+    width: 0%;
+    border-radius: 10px;
+    background-color: var(--blue-dim);
+    transition: width 0.1s ease;
+}
+
+.upload .show ~ div{
+    display: block;
 }

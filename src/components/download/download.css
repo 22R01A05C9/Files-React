@@ -1,9 +1,9 @@
 .download{
     width: 50vw;
-    padding: 25vh 15vw 26vh 5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap:10px;
 }
 
@@ -32,7 +32,7 @@
     margin-top: 10px;
 }
 
-.download .submit button{
+.submit button{
     background-color: var(--blue);
     outline: none;
     border: none;
@@ -43,12 +43,11 @@
     transition: all 0.2s ease;
 }
 
-.download .submit button:not(:disabled):hover{
+.submit button:not(:disabled):hover{
     transform: scale(1.02);
     background-color: var(--blue-dim);
     font-size: 1.101rem;
     cursor: pointer;
-
 }
 
 .download .submit button:disabled{

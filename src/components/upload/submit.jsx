@@ -1,7 +1,7 @@
-function Submit(){
+function Submit({submit}){
     return(
-        <div className="submit">
-            <button>Upload</button>
+        <div className="submit disnone">
+            <button onClick={submit}>Upload</button>
         </div>
     )
 }

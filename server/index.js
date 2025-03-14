@@ -17,6 +17,6 @@ app.use(express.json())
 
 require("./files.js")(app)
 
-server.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
     console.log("server staretd on http://localhost:" + process.env.PORT);
 })

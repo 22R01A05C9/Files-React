@@ -71,9 +71,9 @@ module.exports = async function (app) {
         }
         getfiledata(parseInt(ccode)).then((data)=>{
             if(data){
-                res.json({status:true, message:"Code Exists"})
+                res.json({status:false, message:"Code Exists"})
             }else{
-                res.json({status:false, message:"Code Available"})
+                res.json({status:true, message:"Code Available"})
             }
         })
     })

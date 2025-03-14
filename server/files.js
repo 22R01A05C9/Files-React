@@ -137,12 +137,15 @@ module.exports = async function (app) {
     })
 
     app.get("/files/download/:id", (req, res) => {
+        if(req.headers.range){
+            return res.status(416).send("Range requests are not supported");
+        }
         let id = req.params.id;
         getfiledata(id).then((data) => {
             if (data) {
                 res.download("./filesdb/" + id + "/" + data.filename, (err) => {
                     if (err) {
-                        res.send({ err: err, msg: "Error Occured" })
+                        console.log("err:"+err);
                         return
                     } else if (data.deleteondownload === "true") {
                         fs.rm("./filesdb/" + id, { recursive: true, force: true }, () => { })

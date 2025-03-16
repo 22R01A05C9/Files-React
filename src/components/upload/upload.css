@@ -133,8 +133,13 @@ input[type="checkbox"]{
     transition: transform 0.1s ease;
 }
 
-.cbody button:hover{
+.cbody button:hover:not(:disabled){
     transform: scale(1.02);
+}
+
+.cbody button:disabled{
+    background-color: #3b6d83ed;
+    cursor: auto;
 }
 
 .ccode input[type="number"]{
@@ -208,13 +213,13 @@ input[type="checkbox"]{
     }
     .file{
         align-items: center;
-        width: 100vw;
+        width: 100%;
     }
     .upload .status{
         width: min(90%, 400px);
     }
     .options{
-        padding: 0 15px;
+        padding: 0 30px;
         width: 100%;
     }
     .options label{

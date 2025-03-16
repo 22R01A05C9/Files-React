@@ -1,6 +1,6 @@
 import Toast from "../../helpers/toast";
 
-function Options({setccodestatus}) {
+function Options({setccodestatus, ccref, dodref, ccodestatus}) {
     const ccodeinp = (e)=>{
         e.target.classList.remove("red")
         e.target.classList.remove("green")
@@ -51,22 +51,22 @@ function Options({setccodestatus}) {
         }
     }
     return (
-        <div className="options disnone">
+        <div className="options">
             <div className="optionstitle show" onClick={clickedoptions}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="var(--back)"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" /></svg>
                 <p>Options</p>
             </div>
-            <div className="ccode">
+            <div className="ccode" ref={ccref}>
                 <div className="chead">
                     <input type="checkbox" id="ccodeo" />
                     <label htmlFor="ccodeo">Click To Set Custom Code Of 4 Digits</label>
                 </div>
                 <div className="cbody">
                     <input onInput={ccodeinp} type="number" id="ccode" placeholder="Enter Custom Code" />
-                    <button onClick={verifycc}>Verify</button>
+                    <button onClick={verifycc} disabled={ccodestatus}>Verify</button>
                 </div>
             </div>
-            <div className="dod">
+            <div className="dod" ref={dodref}>
                 <input type="checkbox" id="dod" />
                 <label htmlFor="dod">Check To Delete The File Once Downloaded</label>
             </div>

@@ -1,6 +1,6 @@
 import "./upload.css"
 import Img from "./img"
-import Status from "./status"
+import Status from "../status/status"
 import Options from "./options"
 import Submit from "./submit"
 import Output from "./output"
@@ -33,6 +33,7 @@ function Upload(){
         let ccchecked = document.querySelector(".ccode .chead input")
         let ccinput = document.querySelector(".ccode #ccode")
         let dod = document.querySelector(".dod input")
+        let size = document.querySelector(".info p:nth-child(2)").innerHTML.slice(23,)
         if(fileinp.files.length == 0){
             Toast("No File Selected","error",localStorage.getItem("theme") || "dark")
             return;
@@ -47,20 +48,26 @@ function Upload(){
         formdata.append("file",fileinp.files[0])
         formdata.append("customstatus", ccchecked.checked)
         formdata.append("deleteondownload", dod.checked)
+        formdata.append("size", size)
         if(ccchecked.checked) formdata.append("customid", ccinput.value)
         let xhr = new XMLHttpRequest();
         xhr.open("POST","/api/files/upload")
         xhr.upload.addEventListener("progress", (e)=>{
             let per = parseInt(e.loaded/e.total * 100).toString()
-            document.querySelector(".progressouter .inner").style.width = `${per}%`
+            document.querySelector(".upload .progressouter .inner").style.width = `${per}%`
         })
         xhr.send(formdata)
         xhr.onload = () => {
-            let res = JSON.parse(xhr.response)
-            if(res.status){
-                uploaded(res, ccinput, ccchecked, dod)
+            let contenttype = xhr.getResponseHeader("Content-Type")
+            if(contenttype.includes("application/json")){
+                let res = JSON.parse(xhr.response)
+                if(res.status){
+                    uploaded(res, ccinput, ccchecked, dod)
+                }else{
+                    Toast(res.message,"error",localStorage.getItem("theme") || "dark")
+                }
             }else{
-                Toast(res.message,"error",localStorage.getItem("theme") || "dark")
+                Toast("Please Try Again!!", "error", localStorage.getItem("theme") || "dark")
             }
         }
     }

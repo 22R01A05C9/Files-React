@@ -1,0 +1,16 @@
+.status{
+    background-color: var(--files-status-back);
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid var(--files-status-border);
+}
+
+.status .info{
+    display: flex;
+    justify-content: space-around;
+    gap:20px;
+}
+
+.status .info p{
+    display: inline;
+}

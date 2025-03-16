@@ -1,7 +1,7 @@
+import "./status.css"
+
 function Status({file}) {
     let name,size;
-    let fileinp = document.querySelector(".img input")
-
     if(file){
         if(file.name.length > 16){
             let l = file.name.length
@@ -9,7 +9,9 @@ function Status({file}) {
         }else{
             name = file.name
         }
-        size = parseFloat(file.size/1000000).toFixed(2).toString() + " MB"
+        let exp = /^[0-9]{1,2}.[0-9]{2} MB$/
+        if(exp.test(file.size)) size = file.size
+        else size = parseFloat(file.size/1000000).toFixed(2).toString() + " MB"
         }
 
     return (

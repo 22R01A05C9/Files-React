@@ -27,9 +27,14 @@
 
 .download .dinput input:not(:disabled){
     background-color: var(--files-choose-active);
+    outline: 1px solid var(--back);
 }
 
-.download p{
+.download .dinput input:not(:disabled):focus{
+    outline: 2px solid var(--back);
+}
+
+.download p.desc{
     font-size: 1.1rem;
     font-weight: 400;
     margin-top: 10px;
@@ -58,9 +63,16 @@
     border: none;
 }
 
+.download .status{
+    width: 70%;
+}
+
 @media screen and (max-width:749px) {
     .download{
         display: none;
         margin-top: 0
+    }
+    .download .status{
+        width: min(90%, 400px);
     }
 }

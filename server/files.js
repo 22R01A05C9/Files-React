@@ -45,9 +45,9 @@ module.exports = async function (app) {
         }, 1000 * 60 * process.env.FILES_MINUTES)
     }
 
-    async function addfiledatatodb(fileid, filename, deleteondownload, filestr) {
+    async function addfiledatatodb(fileid, filename, deleteondownload, filestr, size) {
         let files = db.collection("files")
-        files.insertOne({ id: fileid, filename: filename, deleteondownload: deleteondownload, filestr: filestr })
+        files.insertOne({ id: fileid, filename: filename, deleteondownload: deleteondownload, filestr: filestr, size: size })
         removefiledata(filestr, files)
     }
 
@@ -89,13 +89,20 @@ module.exports = async function (app) {
                 return;
             }
             let deleteondownload = req.body.deleteondownload;
-            if (!deleteondownload) {
+            if (!deleteondownload || (deleteondownload !== "false" && deleteondownload !== "true")) {
                 res.json({ status: false, message: "No Deleteondownload Data" })
                 fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
                 return;
             }
+            let size = req.body.size;
+            let exp = /^[0-9]{1,2}.[0-9]{2} MB$/
+            if (!size || !exp.test(size)) {
+                res.json({ status: false, message: "No Size Data" })
+                fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
+                return;
+            }
             let customstatus = req.body.customstatus;
-            if (!customstatus) {
+            if (!customstatus || (customstatus!=="false" && customstatus !== "true")) {
                 res.json({ status: false, message: "No Custom Id Data" })
                 fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
                 return;
@@ -121,13 +128,13 @@ module.exports = async function (app) {
                     } else {
                         fileid = parseInt(customid)
                         let filename = req.file.filename
-                        addfiledatatodb(fileid, filename, deleteondownload, filestr)
+                        addfiledatatodb(fileid, filename, deleteondownload, filestr, size)
                         res.json({ status: true, id: fileid, str: filestr })
                     }
                 })
             } else {
                 let filename = req.file.filename
-                addfiledatatodb(fileid, filename, deleteondownload, filestr)
+                addfiledatatodb(fileid, filename, deleteondownload, filestr, size)
                 res.json({ status: true, id: fileid, str: filestr })
             }
 
@@ -181,7 +188,7 @@ module.exports = async function (app) {
         }
         getfiledata(parseInt(data.id)).then((data) => {
             if (data) {
-                res.json({ status: true, redirect: sanitize("/files/download/" + data.filestr) })
+                res.json({ status: true, redirect: ("/files/download/" + data.filestr), name: data.filename, size:data.size })
             } else {
                 res.json({ status: false, message: "No File Found" })
             }

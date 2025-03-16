@@ -65,11 +65,11 @@
 
 .download .status{
     width: 70%;
+    margin-top: 10px;
 }
 
 @media screen and (max-width:749px) {
     .download{
-        display: none;
         margin-top: 0
     }
     .download .status{

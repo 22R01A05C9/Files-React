@@ -8,6 +8,8 @@ const Choose = lazy(()=>import("./components/choose/choose"))
 
 function App() {
 	const [showchoose, setshowchoose] = useState(window.matchMedia("(max-width: 749px)").matches)
+    const [choose,setchoose] = useState("Download")
+
 	useEffect(()=>{
 		window.addEventListener("resize",()=>{
 			setshowchoose(window.matchMedia("(max-width: 749px)").matches)
@@ -18,8 +20,8 @@ function App() {
 			<div className="fileshare">
 				<div className="main">
 					<Header />
-					{showchoose ? <Choose /> : null}
-					<Mainbody />
+					{showchoose ? <Choose setchoose={setchoose}/> : null}
+					<Mainbody showchoose={showchoose} choose={choose}/>
 				</div>
 				<Footer />
 			</div>

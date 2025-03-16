@@ -1,6 +1,6 @@
 import "./status.css"
 
-function Status({file}) {
+function Status({file, per}) {
     let name,size;
     if(file){
         if(file.name.length > 16){
@@ -15,7 +15,7 @@ function Status({file}) {
         }
 
     return (
-        <div className="status disnone">
+        <div className="status">
             {file && 
                 <div className="info">
                     <p><strong>File:</strong> {name}</p>
@@ -24,7 +24,7 @@ function Status({file}) {
 
             
             <div className="progressouter">
-                <div className="inner"></div>
+                <div className="inner" style={{width:per}}></div>
             </div>
         </div>
     )

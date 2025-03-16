@@ -1,16 +1,20 @@
+import { useRef } from "react";
 import Toast from "../../helpers/toast";
-function Cinput({submit}){
+function Cinput({submit, buttonref, inputref, file}){
     const paste = (e)=>{
+        if(file){
+            e.preventDefault()
+            return;
+        }
         let data = e.clipboardData.getData("text");
         let exp = /^[0-9]{4}$/;
         if(exp.test(data)){
-            let inputs = document.querySelectorAll(".download .dinput input")
-            inputs.forEach((input, index)=>{
-                input.value = data[index]
-                if(index < 3){
+            inputref.current.forEach((input, index)=>{
+                input.value = data[index-1]
+                if(index <= 3){
                     input.disabled = true
-                    inputs[index+1].disabled = false
-                    inputs[index+1].focus()
+                    inputref.current[index+1].disabled = false
+                    inputref.current[index+1].focus()
                 }
             })
         }else{
@@ -19,7 +23,14 @@ function Cinput({submit}){
         }        
     }
     const inp = (e)=>{
-        document.querySelector(".download .submit button").disabled = true
+        if(file){
+            e.target.value = ""
+            e.target.disabled = true
+            Toast("File Is Being Downloaded!", "warn", localStorage.getItem("theme") || "dark")
+            e.preventDefault()
+            return;
+        }
+        buttonref.current.disabled = true
         let value = e.target.value.trim()
         let length = value.length
         if(length == 0) return;
@@ -32,12 +43,19 @@ function Cinput({submit}){
             next.disabled = false
             next.focus()
         }else{
-            document.querySelector(".download .submit button").removeAttribute("disabled")
+            buttonref.current.removeAttribute("disabled")
         }
     }
     const kdown = (e)=>{
+        if(file){
+            e.target.value = ""
+            e.target.disabled = true
+            Toast("File Is Being Downloaded!", "warn", localStorage.getItem("theme") || "dark")
+            e.preventDefault()
+            return;
+        }
         if(e.key == "Backspace"){
-            document.querySelector(".download .submit button").disabled = true
+            buttonref.current.disabled = true
             if(e.target.value){
                 e.target.value="";
                 return;
@@ -48,16 +66,17 @@ function Cinput({submit}){
                 prev.disabled = false
                 prev.focus()
             }
-        }else if(e.key == "Enter" && document.querySelector(".download .submit button").disabled == false){
+        }else if(e.key == "Enter" && buttonref.current.disabled == false){
             submit()
         }
     }
     return(
-        <div className="dinput">
-            <input type="number" name="i1" onInput={inp} onKeyDown={kdown} onPaste={paste}/>
-            <input type="number" name="i2" onInput={inp} onKeyDown={kdown} disabled onPaste={paste}/>
-            <input type="number" name="i3" onInput={inp} onKeyDown={kdown} disabled onPaste={paste}/>
-            <input type="number" name="i4" onInput={inp} onKeyDown={kdown} disabled onPaste={paste}/>
+        <div className="dinput" >
+            {[1,2,3,4].map((ind)=>{
+                return(
+                    <input key={ind} type="number" ref={(ele)=> (inputref.current[ind] = ele)} name={`i${ind}`} onInput={inp} onKeyDown={kdown} disabled={ind>1} onPaste={paste}/>
+                )
+            })}
         </div>
     )
 }

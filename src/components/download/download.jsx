@@ -1,20 +1,23 @@
 import "./download.css"
 import Cinput from "./cinput";
 import Status from "../status/status";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AES } from "crypto-js";
 import Toast from "../../helpers/toast";
 
 function Download(){
+    const buttonRef = useRef(null)
+    const inputRefs = useRef([])
+    const [dper,setdper] = useState("0%")
+    const [dfile,setdfile] = useState(false)
     const download = ()=>{
-        let inputs = document.querySelectorAll(".download .dinput input")
         let code = ""
-        inputs.forEach((input)=>{
+        inputRefs.current.forEach((input)=>{
             code += input.value
         })
-        let exp = /^[0-9]{4}$/
+        let exp = /^[0-9]{4}$/;
         if(!exp.test(code)){
-            Toast("Invalid Code","error",localStorage.getItem("theme") || "dark")
+            Toast("Invalid Code!", "warn", localStorage.getItem("theme") || "dark")
             return;
         }
         let data = JSON.stringify({id:code})
@@ -29,10 +32,11 @@ function Download(){
             return res.json()
         }).then((data)=>{
             if(data.status){
-                document.querySelector(".download .status").classList.remove("disnone")
-                document.querySelectorAll(".download .dinput input").forEach((input)=>{
+                setdfile(data)
+                inputRefs.current.forEach((input)=>{
                     input.disabled = true 
                 })
+                buttonRef.current.disabled = true
                 let redirect = data.redirect
                 redirect = window.location.origin + "/api" + redirect
                 let xhr = new XMLHttpRequest()
@@ -41,7 +45,7 @@ function Download(){
                 xhr.send()
                 xhr.onprogress = (e)=>{
                     let per = parseInt(e.loaded/e.total * 100).toString()
-                    document.querySelector(".download .status .progressouter .inner").style.width = `${per}%`
+                    setdper(`${per}%`)
                 }
                 xhr.onload = ()=>{
                     let headers = xhr.getResponseHeader("Content-Type")
@@ -59,7 +63,13 @@ function Download(){
                     document.querySelectorAll(".download .dinput input").forEach((input)=>{
                         input.value = ""
                     })
-                    document.querySelector(".download .dinput input").disabled = false
+                    setTimeout(() => {
+                        setdper("0%")
+                        setdfile(false)
+                        inputRefs.current[1].disabled=false
+                        inputRefs.current[1].focus()
+                        buttonRef.current.disabled = false
+                    }, 3000);
 
                 }
             }else{
@@ -68,18 +78,18 @@ function Download(){
         })
     }
     useEffect(()=>{
-        document.querySelector(".download .submit button").addEventListener("click",download)
-        document.querySelector(".download .dinput input").focus()
+        buttonRef.current.addEventListener("click",download)
+        inputRefs.current[1].focus()
     },[])
     return(
         <div className="download">
             <h3>Download</h3>
             <p className="desc">Enter Code To Download File</p>
-            <Cinput submit={download}/>
+            <Cinput submit={download} buttonref={buttonRef} inputref={inputRefs} file={dfile}/>
             <div className="submit">
-                <button disabled>Download</button>
+                <button disabled ref={buttonRef}>Download</button>
             </div>
-            <Status file={{name:"indes.js",size:"0.02 MB"}}/>
+            {dfile ? <Status file={dfile} per={dper}/> : null}
         </div>
     )
 }

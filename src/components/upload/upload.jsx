@@ -7,7 +7,7 @@ import Output from "./output"
 import { useState } from "react"
 import Toast from "../../helpers/toast";
 
-function Upload(){
+function Upload({choose}){
     const [file,setFile] = useState(null)
     const [ccodestatus,setccodestatus] = useState(false)
 
@@ -72,7 +72,7 @@ function Upload(){
         }
     }
     return(
-        <div className="upload">
+        <div className={"upload" + (choose === "Upload" ? "" : " disnone")}>
             <Img setFile={setFile}/>
             <div className="file">
                 <Status file={file}/>

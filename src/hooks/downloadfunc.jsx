@@ -52,7 +52,7 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
                 a.click()
                 Toast("File Downloaded Successfully", "success", localStorage.getItem("theme") || "dark")
                 inputRefs.current.forEach((input) => {
-                    input.value = ""
+                    if(input) input.value = ""
                 })
                 setTimeout(() => {
                     setdper("0%")

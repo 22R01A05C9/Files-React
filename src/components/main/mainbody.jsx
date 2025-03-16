@@ -6,9 +6,8 @@ function Mainbody({showchoose, choose}){
     return(
         <div className="files">
             <ToastContainer />
-            {showchoose == true ? choose == "Download" ? <Download /> : null : <Download />}
-            {showchoose == true ? choose == "Upload" ? <Upload /> : null : <Upload />}
-            
+            {showchoose == true ? <Download choose={choose}/> : <Download choose={"Download"}/>}
+            {showchoose == true ? <Upload choose={choose}/> : <Upload choose={"Upload"}/>}
         </div>
     )
 }

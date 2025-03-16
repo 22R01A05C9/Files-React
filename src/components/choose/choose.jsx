@@ -4,6 +4,7 @@ import "./choose.css"
 function Choose(){
     useEffect(()=>{
         document.querySelector(".download").classList.add("chooseshow")
+        document.querySelector(".upload").classList.remove("chooseshow")
         const choose = document.querySelectorAll(".choose p")
         choose.forEach((item)=>{
             item.addEventListener("click",()=>{

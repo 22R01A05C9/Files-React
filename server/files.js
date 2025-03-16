@@ -1,4 +1,5 @@
 const multer = require("multer")
+const sanitize = require("sanitize-filename")
 const fs = require("fs")
 const { MongoClient } = require("mongodb")
 const cryptojs = require("crypto-js")
@@ -31,7 +32,7 @@ module.exports = async function (app) {
             cb(null, './filesdb/' + randstr)
         },
         filename: function (req, file, cb) {
-            cb(null, file.originalname)
+            cb(null, sanitize(file.originalname))
         }
     })
 
@@ -119,13 +120,13 @@ module.exports = async function (app) {
                         return;
                     } else {
                         fileid = parseInt(customid)
-                        let filename = req.file.originalname
+                        let filename = req.file.filename
                         addfiledatatodb(fileid, filename, deleteondownload, filestr)
                         res.json({ status: true, id: fileid, str: filestr })
                     }
                 })
             } else {
-                let filename = req.file.originalname
+                let filename = req.file.filename
                 addfiledatatodb(fileid, filename, deleteondownload, filestr)
                 res.json({ status: true, id: fileid, str: filestr })
             }
@@ -146,6 +147,7 @@ module.exports = async function (app) {
                 res.download("./filesdb/" + id + "/" + data.filename, (err) => {
                     if (err) {
                         console.log("err:"+err);
+                        res.json({status:false,message:"File Not Found"})
                         return
                     } else if (data.deleteondownload === "true") {
                         fs.rm("./filesdb/" + id, { recursive: true, force: true }, () => { })
@@ -179,7 +181,7 @@ module.exports = async function (app) {
         }
         getfiledata(parseInt(data.id)).then((data) => {
             if (data) {
-                res.json({ status: true, redirect: "/files/download/" + data.filestr })
+                res.json({ status: true, redirect: sanitize("/files/download/" + data.filestr) })
             } else {
                 res.json({ status: false, message: "No File Found" })
             }

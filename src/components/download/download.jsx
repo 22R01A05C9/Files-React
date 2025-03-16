@@ -32,6 +32,7 @@ function Download(){
                 redirect = window.location.origin + "/api" + redirect
                 let a = document.createElement("a")
                 a.href = redirect
+                a.setAttribute("download", "download")
                 a.click()
             }else{
                 Toast(data.message,"error",localStorage.getItem("theme") || "dark")

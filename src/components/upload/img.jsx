@@ -3,6 +3,7 @@ import Toast from "../../helpers/toast";
 
 function Img({ setFile }) {
     const uploadedfile = (e) => {
+        if(e.target.files.length === 0) return;
         if ((e.target.files[0].size / 1000) > 25000) {
             Toast("File Size Exceeded","error",localStorage.getItem("theme") || "dark")
             return
@@ -15,7 +16,6 @@ function Img({ setFile }) {
             setFile(e.target.files[0])
             document.querySelector(".upload .status .inner").style.width = "0%"
             document.querySelectorAll(".output .buttons button").forEach((item)=>{
-                console.log(item);
                 item.removeAttribute("aria-data")
             })
         }

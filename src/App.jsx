@@ -5,6 +5,7 @@ import Footer from "./components/footer/footer"
 import Mainbody from "./components/main/mainbody"
 import Loading from "./components/loading/loading"
 const Choose = lazy(()=>import("./components/choose/choose"))
+const Feedback = lazy(()=>import("./components/feedback/feedback"))
 
 function App() {
 	const [showchoose, setshowchoose] = useState(window.matchMedia("(max-width: 749px)").matches)
@@ -25,6 +26,7 @@ function App() {
 				</div>
 				<Footer />
 			</div>
+			{localStorage.getItem("filesfeedback") === null ? <Feedback application="files" /> : null}
 		</Suspense>
 
 	)

@@ -45,6 +45,8 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
                     inputRefs.current[1].disabled = false
                     inputRefs.current[1].focus()
                     buttonRef.current.disabled = false
+                    if(localStorage.getItem("filesfeedback") === null) 
+                        document.querySelector(".mainfeedback").classList.remove("disnone")
                 }, 3000);
                 let headers = xhr.getResponseHeader("Content-Type")
                 if (headers.includes("application/json")) {

@@ -16,6 +16,7 @@ app.use(cors())
 app.use(express.json({limit:"50mb"}))
 
 require("./files.js")(app)
+require("./feedback.js")(app)
 
 app.listen(process.env.PORT, () => {
     console.log("server staretd on http://localhost:" + process.env.PORT);

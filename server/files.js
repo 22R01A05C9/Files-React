@@ -171,29 +171,24 @@ module.exports = async function (app) {
         let token = req.body.token;
         if (!token) {
             res.json({ status: false, message: "Invalid Token" })
-            console.log("1");
             return;
         }
         let data = cryptojs.AES.decrypt(token, process.env.FILES_API_KEY).toString(cryptojs.enc.Utf8);
         if (!data) {
             res.json({ status: false, messgae: "Invalid Authentication" })
-            console.log("2");
             return
         }
         data = JSON.parse(data)
         let regexp = /^[0-9]{4}$/
         if (!regexp.test(data.id)) {
             res.json({ status: false, message: "Invalid File Id" })
-            console.log("3");
             return
         }
         getfiledata(parseInt(data.id)).then((data) => {
             if (data) {
                 res.json({ status: true, redirect: ("/files/download/" + data.filestr), name: data.filename, size:data.size })
-                console.log("4");
             } else {
                 res.json({ status: false, message: "No File Found" })
-                console.log("5");
             }
         })
     })

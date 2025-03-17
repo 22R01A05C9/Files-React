@@ -1,9 +1,9 @@
 const multer = require("multer")
-const sanitize = require("sanitize-filename")
 const fs = require("fs")
 const { MongoClient } = require("mongodb")
 const cryptojs = require("crypto-js")
 const dotenv = require("dotenv")
+const path = require("path")
 dotenv.config()
 
 module.exports = async function (app) {
@@ -26,13 +26,12 @@ module.exports = async function (app) {
     let db = connect.db("website")
 
     const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            let randstr = randomstring(15)
-            fs.mkdir("./filesdb/" + randstr, () => { })
-            cb(null, './filesdb/' + randstr)
+        destination: function (req,file,cb) {
+            cb(null, './filesdb/')
         },
-        filename: function (req, file, cb) {
-            cb(null, sanitize(file.originalname))
+        filename: function (req,file,cb) {
+            let randstr = randomstring(15)
+            cb(null, randstr)
         }
     })
 
@@ -40,8 +39,12 @@ module.exports = async function (app) {
 
     function removefiledata(filestr, filesdb) {
         setTimeout(() => {
-            fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
-            filesdb.deleteOne({ filestr: filestr })
+            filesdb.findOne({ filestr: filestr }).then((data) => {
+                if (data) {
+                    fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
+                    filesdb.deleteOne({ filestr: filestr })
+                }
+            })
         }, 1000 * 60 * process.env.FILES_MINUTES)
     }
 
@@ -82,12 +85,13 @@ module.exports = async function (app) {
 
     app.post("/files/upload", upload.single("file"), function (req, res) {
         try {
-            let filestr = req.file?.destination.split("/")[2]
+            let filestr = req.file?.filename;
             let fileid = getfilesrandomid();
             if (!filestr) {
                 res.json({ status: false, message: "No File Found" })
                 return;
             }
+            let filename = req.file.originalname
             let deleteondownload = req.body.deleteondownload;
             if (!deleteondownload || (deleteondownload !== "false" && deleteondownload !== "true")) {
                 res.json({ status: false, message: "No Deleteondownload Data" })
@@ -120,24 +124,17 @@ module.exports = async function (app) {
                     fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
                     return;
                 }
-                getfiledata(parseInt(customid)).then((data) => {
-                    if (data) {
-                        res.json({ status: false, message: "Custom Id Already Used" })
-                        fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
-                        return;
-                    } else {
-                        fileid = parseInt(customid)
-                        let filename = req.file.filename
-                        addfiledatatodb(fileid, filename, deleteondownload, filestr, size)
-                        res.json({ status: true, id: fileid, str: filestr })
-                    }
-                })
-            } else {
-                let filename = req.file.filename
-                addfiledatatodb(fileid, filename, deleteondownload, filestr, size)
-                res.json({ status: true, id: fileid, str: filestr })
+                fileid = parseInt(customid)
             }
-
+            getfiledata(fileid).then((data) => {
+                if (data) {
+                    res.json({ status: false, message: "Custom Id Already Used" })
+                    fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
+                } else {
+                    addfiledatatodb(fileid, filename, deleteondownload, filestr, size)
+                    res.json({ status: true, id: fileid, str: filestr })
+                }
+            })
         } catch (err) {
             fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
             res.json({ status: false, message: "Some Error Occuerd" })
@@ -151,7 +148,8 @@ module.exports = async function (app) {
         let id = req.params.id;
         getfiledata(id).then((data) => {
             if (data) {
-                res.download("./filesdb/" + id + "/" + data.filename, (err) => {
+                let filepath = path.resolve(__dirname,"filesdb",id);
+                res.download(filepath, data.filename,(err) => {
                     if (err) {
                         console.log("err:"+err);
                         res.json({status:false,message:"File Not Found"})
@@ -173,24 +171,29 @@ module.exports = async function (app) {
         let token = req.body.token;
         if (!token) {
             res.json({ status: false, message: "Invalid Token" })
+            console.log("1");
             return;
         }
         let data = cryptojs.AES.decrypt(token, process.env.FILES_API_KEY).toString(cryptojs.enc.Utf8);
         if (!data) {
             res.json({ status: false, messgae: "Invalid Authentication" })
+            console.log("2");
             return
         }
         data = JSON.parse(data)
         let regexp = /^[0-9]{4}$/
         if (!regexp.test(data.id)) {
             res.json({ status: false, message: "Invalid File Id" })
+            console.log("3");
             return
         }
         getfiledata(parseInt(data.id)).then((data) => {
             if (data) {
                 res.json({ status: true, redirect: ("/files/download/" + data.filestr), name: data.filename, size:data.size })
+                console.log("4");
             } else {
                 res.json({ status: false, message: "No File Found" })
+                console.log("5");
             }
         })
     })

@@ -6,8 +6,13 @@ function Output({data}) {
             <p>File Has Been Uploaded Successfully!!</p>
             <p className="showcode">Your Code is <strong>{data.id}</strong></p>
             <div className="buttons">
-                <button onClick={(e)=>{copy(e,data)}}>Copy Code</button>
-                <button onClick={copy}>Copy Link</button>
+                {
+                    ["Code","Link"].map((item)=>{
+                        return (
+                            <button key={item} onClick={(e)=>{copy(e,data)}}>Copy {item}</button>
+                        )
+                    })
+                }
             </div>
 
         </div>

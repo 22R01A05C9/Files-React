@@ -39,6 +39,13 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
                 setdper(`${per}%`)
             }
             xhr.onload = () => {
+                setTimeout(() => {
+                    setdper("0%")
+                    setdfile(false)
+                    inputRefs.current[1].disabled = false
+                    inputRefs.current[1].focus()
+                    buttonRef.current.disabled = false
+                }, 3000);
                 let headers = xhr.getResponseHeader("Content-Type")
                 if (headers.includes("application/json")) {
                     Toast("Some Error Occured!!", "error", localStorage.getItem("theme") || "dark")
@@ -54,14 +61,6 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
                 inputRefs.current.forEach((input) => {
                     if(input) input.value = ""
                 })
-                setTimeout(() => {
-                    setdper("0%")
-                    setdfile(false)
-                    inputRefs.current[1].disabled = false
-                    inputRefs.current[1].focus()
-                    buttonRef.current.disabled = false
-                }, 3000);
-
             }
         } else {
             Toast(data.message, "error", localStorage.getItem("theme") || "dark")

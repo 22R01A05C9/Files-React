@@ -155,25 +155,6 @@ input[type="checkbox"]{
     color: var(--text);
 }
 
-.progressouter{
-    height: 14px;
-    border-radius: 10px;
-    width: 100%;
-    padding: 2px;
-    text-align: center;
-    background-color: white;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.progressouter .inner{
-    height: 10px;
-    width: 0%;
-    border-radius: 10px;
-    background-color: var(--blue-dim);
-    transition: width 0.1s ease;
-}
-
 .upload .show ~ div{
     display: block;
 }

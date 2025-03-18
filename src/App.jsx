@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react"
+import { Suspense, lazy, useEffect, useRef, useState } from "react"
 import "./App.css"
 import Header from "./components/header/header"
 import Footer from "./components/footer/footer"
@@ -10,9 +10,16 @@ const Choose = lazy(() => import("./components/choose/choose"))
 const Feedback = lazy(() => import("./components/feedback/feedback"))
 
 function App() {
+	const ip = useRef(null)
 	const [showchoose, setshowchoose] = useState(window.matchMedia("(max-width: 749px)").matches)
 	const [choose, setchoose] = useState("Download")
-
+	useEffect(() => {
+		fetch("https://api64.ipify.org?format=json").then((res) => {
+			return res.json()
+		}).then((data) => {
+			ip.current = data.ip
+		})
+	}, [])
 	useEffect(() => {
 		window.addEventListener("resize", () => {
 			setshowchoose(window.matchMedia("(max-width: 749px)").matches)
@@ -28,7 +35,7 @@ function App() {
 				<div className="main">
 					<Header />
 					{showchoose ? <Choose setchoose={setchoose} /> : null}
-					<Mainbody showchoose={showchoose} choose={choose} />
+					<Mainbody showchoose={showchoose} choose={choose} ip={ip}/>
 				</div>
 				<Footer />
 			</div>

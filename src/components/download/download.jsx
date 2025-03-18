@@ -3,12 +3,12 @@ import Cinput from "./cinput";
 import Status from "../status/status";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Downloadfunc from "../../hooks/downloadfunc";
-function Download({ choose }) {
+function Download({ choose, ip }) {
     const buttonRef = useRef(null)
     const inputRefs = useRef([])
     const [dper, setdper] = useState("0%")
     const [dfile, setdfile] = useState(false)
-    const download = useCallback(() => Downloadfunc(inputRefs, buttonRef, setdper, setdfile), [])
+    const download = useCallback(() => Downloadfunc(inputRefs, buttonRef, setdper, setdfile, ip), [])
     useEffect(() => {
         buttonRef.current.addEventListener("click", download)
         inputRefs.current[1].focus()

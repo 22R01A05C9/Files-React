@@ -3,6 +3,7 @@ const cors = require("cors")
 const dotenv = require("dotenv")
 dotenv.config()
 const app = express()
+app.set('trust proxy', 1)
 app.use(function (req, res, next) {
     try {
         decodeURIComponent(req.path)

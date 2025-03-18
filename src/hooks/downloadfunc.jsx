@@ -1,7 +1,7 @@
 import { AES } from "crypto-js";
 import Toast from "../helpers/toast";
 
-const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
+const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile, ip) => {
     let code = ""
     inputRefs.current.forEach((input) => {
         code += input.value
@@ -16,7 +16,8 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
     fetch("/api/files/download", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "X-Forwarded-For": ip.current
         },
         body: JSON.stringify({ token: token })
     }).then((res) => {

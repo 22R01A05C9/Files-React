@@ -108,7 +108,7 @@ input[type="checkbox"] {
     display: none;
 }
 
-.red::placeholder {
+.ccode .cbody input.red::placeholder {
     color: red;
 }
 

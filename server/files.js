@@ -7,9 +7,11 @@ const path = require("path")
 const ratelimiter = require("express-rate-limit")
 const limiteroptions = {
     windowMs: 1000 * 60,
-    limit: 5,
+    limit: 10,
     statusCode: 200,
-    message: { status: false, message: "Too Many Requests" }
+    message: { status: false, message: "Too Many Requests" },
+    legacyHeaders: false,
+    standardHeaders: true
 }
 const uploadlimiter = ratelimiter(limiteroptions)
 const downloadlimiter = ratelimiter(limiteroptions)

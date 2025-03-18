@@ -9,7 +9,7 @@ const ccodeinp = (e, setccodestatus) => {
     }
 }
 
-const verifycc = (ccref, setccodestatus) => {
+const verifycc = (ccref, setccodestatus, ip) => {
     let ccode = ccref.current.querySelector("#ccode");
     let regexp = /^[0-9]{4}$/;
     let code = ccode.value;
@@ -21,7 +21,8 @@ const verifycc = (ccref, setccodestatus) => {
     fetch("/api/files/cverify", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "X-Requested-For": ip.current
         },
         body: JSON.stringify({
             ccode: code

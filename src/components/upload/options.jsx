@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { ccodeinp, verifycc, clickedoptions } from "../../hooks/options";
 
-function Options({ setccodestatus, ccref, dodref, ccodestatus }) {
+function Options({ setccodestatus, ccref, dodref, ccodestatus, ip }) {
     const optionsRef = useRef(null)
 
     return (
@@ -17,7 +17,7 @@ function Options({ setccodestatus, ccref, dodref, ccodestatus }) {
                 </div>
                 <div className="cbody">
                     <input onInput={(e) => { ccodeinp(e, setccodestatus) }} type="number" id="ccode" placeholder="Enter Custom Code" />
-                    <button onClick={verifycc.bind(null, ccref, setccodestatus)} disabled={ccodestatus}>Verify</button>
+                    <button onClick={verifycc.bind(null, ccref, setccodestatus, ip)} disabled={ccodestatus}>Verify</button>
                 </div>
             </div>
             <div className="dod" ref={dodref}>

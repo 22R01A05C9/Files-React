@@ -34,6 +34,7 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile, ip) => {
             let xhr = new XMLHttpRequest()
             xhr.open("GET", redirect)
             xhr.responseType = "blob"
+            xhr.setRequestHeader("X-Forwarded-For", ip.current)
             xhr.send()
             xhr.onprogress = (e) => {
                 let per = parseInt(e.loaded / e.total * 100).toString()

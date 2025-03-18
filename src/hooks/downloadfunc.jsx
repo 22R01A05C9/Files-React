@@ -45,7 +45,7 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
                     inputRefs.current[1].disabled = false
                     inputRefs.current[1].focus()
                     buttonRef.current.disabled = false
-                    if(localStorage.getItem("filesfeedback") === null) 
+                    if (localStorage.getItem("filesfeedback") === null)
                         document.querySelector(".mainfeedback").classList.remove("disnone")
                 }, 3000);
                 let headers = xhr.getResponseHeader("Content-Type")
@@ -61,7 +61,7 @@ const Downloadfunc = (inputRefs, buttonRef, setdper, setdfile) => {
                 a.click()
                 Toast("File Downloaded Successfully", "success", localStorage.getItem("theme") || "dark")
                 inputRefs.current.forEach((input) => {
-                    if(input) input.value = ""
+                    if (input) input.value = ""
                 })
             }
         } else {

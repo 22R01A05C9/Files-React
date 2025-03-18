@@ -1,5 +1,5 @@
-function Submit({submit}){
-    return(
+function Submit({ submit }) {
+    return (
         <div className="submit">
             <button onClick={submit}>Upload</button>
         </div>

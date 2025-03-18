@@ -1,10 +1,10 @@
-.files{
+.files {
     display: flex;
     min-height: 80vh;
 }
 
 @media screen and (max-width:749px) {
-    .files{
+    .files {
         min-height: 60vh;
         align-items: center;
     }

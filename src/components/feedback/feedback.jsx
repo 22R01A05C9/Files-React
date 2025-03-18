@@ -19,7 +19,7 @@ function Feedback({ application }) {
 
     const clickedstar = (e) => {
         let tar = e.target
-        if(tar.tagName === "path") tar = tar.parentNode
+        if (tar.tagName === "path") tar = tar.parentNode
         let par = tar.parentNode
         let rating = parseInt(par.className[7])
         setRating(rating)

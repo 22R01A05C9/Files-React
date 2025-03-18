@@ -10,11 +10,11 @@ function copytext(text) {
 }
 const copy = (e, data) => {
     console.log(data)
-    let item = e.target.innerHTML.slice(5,9)
+    let item = e.target.innerHTML.slice(5, 9)
     let copydata = (item === "Code" ? data.id : data.link)
-    if(!navigator.clipboard) copytext(copydata);
+    if (!navigator.clipboard) copytext(copydata);
     else navigator.clipboard.writeText(copydata);
-    Toast(`${item} Copied To Clipboard`,"success",localStorage.getItem("theme") || "dark")
+    Toast(`${item} Copied To Clipboard`, "success", localStorage.getItem("theme") || "dark")
 }
 
-export {copy}
+export { copy }

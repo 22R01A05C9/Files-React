@@ -1,4 +1,4 @@
-.choose{
+.choose {
     display: flex;
     padding: 6px;
     margin: 10px auto;
@@ -9,7 +9,7 @@
     background-color: var(--files-choose-back);
 }
 
-.choose p{
+.choose p {
     font-size: 1.2rem;
     width: 50%;
     text-align: center;
@@ -18,15 +18,15 @@
     padding: 4px 0;
 }
 
-.files .disnone{
+.files .disnone {
     display: none;
 }
 
-.choose .active{
+.choose .active {
     background-color: var(--files-choose-active);
     box-shadow: 0 0 20px 1px var(--files-choose-shadow);
 }
 
-.choose + div.files .chooseshow{
+.choose+div.files .chooseshow {
     display: flex;
 }

@@ -4,6 +4,17 @@ const { MongoClient } = require("mongodb")
 const cryptojs = require("crypto-js")
 const dotenv = require("dotenv")
 const path = require("path")
+const ratelimiter = require("express-rate-limit")
+const limiteroptions = {
+    windowMs: 1000 * 60,
+    limit: 5,
+    statusCode: 200,
+    message: { status: false, message: "Too Many Requests" }
+}
+const uploadlimiter = ratelimiter(limiteroptions)
+const downloadlimiter = ratelimiter(limiteroptions)
+const getfilelimiter = ratelimiter(limiteroptions)
+const codelimiter = ratelimiter(limiteroptions)
 dotenv.config()
 
 module.exports = async function (app) {
@@ -26,10 +37,10 @@ module.exports = async function (app) {
     let db = connect.db("website")
 
     const storage = multer.diskStorage({
-        destination: function (req,file,cb) {
+        destination: function (req, file, cb) {
             cb(null, './filesdb/')
         },
-        filename: function (req,file,cb) {
+        filename: function (req, file, cb) {
             let randstr = randomstring(15)
             cb(null, randstr)
         }
@@ -62,28 +73,28 @@ module.exports = async function (app) {
     }
 
 
-    app.post("/files/cverify",(req,res)=>{
+    app.post("/files/cverify", codelimiter, (req, res) => {
         let ccode = req.body.ccode;
-        if(!ccode){
-            res.json({status:false,message:"No Code Provided"})
+        if (!ccode) {
+            res.json({ status: false, message: "No Code Provided" })
             return;
         }
         let regexp = /^[0-9]{4}$/
-        if(!regexp.test(ccode)){
-            res.json({status:false, message:"Invalid Code"})
+        if (!regexp.test(ccode)) {
+            res.json({ status: false, message: "Invalid Code" })
             return;
         }
-        getfiledata(parseInt(ccode)).then((data)=>{
-            if(data){
-                res.json({status:false, message:"Code Exists"})
-            }else{
-                res.json({status:true, message:"Code Available"})
+        getfiledata(parseInt(ccode)).then((data) => {
+            if (data) {
+                res.json({ status: false, message: "Code Exists" })
+            } else {
+                res.json({ status: true, message: "Code Available" })
             }
         })
     })
 
 
-    app.post("/files/upload", upload.single("file"), function (req, res) {
+    app.post("/files/upload", uploadlimiter, upload.single("file"), function (req, res) {
         try {
             let filestr = req.file?.filename;
             let fileid = getfilesrandomid();
@@ -106,7 +117,7 @@ module.exports = async function (app) {
                 return;
             }
             let customstatus = req.body.customstatus;
-            if (!customstatus || (customstatus!=="false" && customstatus !== "true")) {
+            if (!customstatus || (customstatus !== "false" && customstatus !== "true")) {
                 res.json({ status: false, message: "No Custom Id Data" })
                 fs.rm("./filesdb/" + filestr, { recursive: true, force: true }, () => { })
                 return;
@@ -141,18 +152,18 @@ module.exports = async function (app) {
         }
     })
 
-    app.get("/files/download/:id", (req, res) => {
-        if(req.headers.range){
+    app.get("/files/download/:id", getfilelimiter, (req, res) => {
+        if (req.headers.range) {
             return res.status(416).send("Range requests are not supported");
         }
         let id = req.params.id;
         getfiledata(id).then((data) => {
             if (data) {
-                let filepath = path.resolve(__dirname,"filesdb",id);
-                res.download(filepath, data.filename,(err) => {
+                let filepath = path.resolve(__dirname, "filesdb", id);
+                res.download(filepath, data.filename, (err) => {
                     if (err) {
-                        console.log("err:"+err);
-                        res.json({status:false,message:"File Not Found"})
+                        console.log("err:" + err);
+                        res.json({ status: false, message: "File Not Found" })
                         return
                     } else if (data.deleteondownload === "true") {
                         fs.rm("./filesdb/" + id, { recursive: true, force: true }, () => { })
@@ -162,12 +173,12 @@ module.exports = async function (app) {
                 })
             } else {
                 //add the link after creating frontend
-                res.json({ status: false, message: "No File Found" })
+                res.redirect("http://localhost:5173/?error=File Not Found")
             }
         })
     })
 
-    app.post("/files/download", (req, res) => {
+    app.post("/files/download", downloadlimiter, (req, res) => {
         let token = req.body.token;
         if (!token) {
             res.json({ status: false, message: "Invalid Token" })
@@ -186,7 +197,7 @@ module.exports = async function (app) {
         }
         getfiledata(parseInt(data.id)).then((data) => {
             if (data) {
-                res.json({ status: true, redirect: ("/files/download/" + data.filestr), name: data.filename, size:data.size })
+                res.json({ status: true, redirect: ("/files/download/" + data.filestr), name: data.filename, size: data.size })
             } else {
                 res.json({ status: false, message: "No File Found" })
             }

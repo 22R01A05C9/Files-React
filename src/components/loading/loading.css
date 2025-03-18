@@ -1,4 +1,4 @@
-.loading{
+.loading {
     height: 100dvh;
     background-color: var(--header-back);
     display: flex;
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.text{
+.text {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -15,10 +15,10 @@
     padding: 20px;
 }
 
-.text::after{
+.text::after {
     position: absolute;
     content: "";
-    border:4px solid transparent;
+    border: 4px solid transparent;
     border-top: 4px solid var(--back);
     width: 100%;
     height: 100%;
@@ -27,10 +27,11 @@
 }
 
 @keyframes spin {
-    0%{
+    0% {
         transform: rotate(0deg);
     }
-    100%{
+
+    100% {
         transform: rotate(360deg);
     }
 }

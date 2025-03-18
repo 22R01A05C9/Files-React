@@ -1,19 +1,19 @@
 import { useEffect, useRef } from "react"
 import "./choose.css"
 
-function Choose({setchoose}){
+function Choose({ setchoose }) {
     const chooseRef = useRef(null)
-    useEffect(()=>{
-        chooseRef.current.querySelectorAll("p").forEach((p)=>{
-            p.addEventListener("click",()=>{
+    useEffect(() => {
+        chooseRef.current.querySelectorAll("p").forEach((p) => {
+            p.addEventListener("click", () => {
                 chooseRef.current.querySelector(".active").classList.remove("active")
                 p.classList.add("active")
                 setchoose(p.innerText)
             })
         })
-    },[])
+    }, [])
 
-    return(
+    return (
         <div className="choose" ref={chooseRef} >
             <p className="active">Download</p>
             <p>Upload</p>

@@ -74,7 +74,7 @@ const Cinput = React.memo(({ submit, buttonref, inputref, file }) => {
         <div className="dinput" >
             {[1, 2, 3, 4].map((ind) => {
                 return (
-                    <input key={ind} type="number" ref={(ele) => (inputref.current[ind] = ele)} name={`i${ind}`} onInput={inp} onKeyDown={kdown} disabled={ind > 1 || file!=false} onPaste={paste} />
+                    <input key={ind} type="number" ref={(ele) => (inputref.current[ind] = ele)} name={`i${ind}`} onInput={inp} onKeyDown={kdown} disabled={ind > 1 || file != false} onPaste={paste} />
                 )
             })}
         </div>

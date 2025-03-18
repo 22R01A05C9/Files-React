@@ -1,17 +1,16 @@
 import "./loading.css"
 import { useEffect } from "react";
 
-function Loading(){
+function Loading() {
     useEffect(() => {
         let root = document.querySelector(":root");
-        if(window.location.pathname.startsWith("/shopping")){
+        if (window.location.pathname.startsWith("/shopping")) {
             root.style.colorScheme = "light"
-            
-        }else{
+        } else {
             root.style.colorScheme = localStorage.getItem("theme") || "dark"
         }
-        }, []);
-    return(
+    }, []);
+    return (
         <div className="loading">
             <div className="text">
                 <span>Please</span>

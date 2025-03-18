@@ -25,14 +25,14 @@ function Upload({ choose }) {
         dod.checked = false
         setccodestatus(false)
         let link = window.location.origin + "/api/files/download/" + res.str
-        setOutput({id:res.id, link:link})
+        setOutput({ id: res.id, link: link })
         setUploading(false)
     }
     const submit = () => {
         let ccinput = ccRef.current.querySelector("#ccode")
         let ccchecked = ccRef.current.querySelector("#ccodeo")
         let dod = dodRef.current.querySelector("#dod")
-        let size = parseFloat(file.size/1000000).toFixed(2).toString() + " MB"
+        let size = parseFloat(file.size / 1000000).toFixed(2).toString() + " MB"
         if (file === null) {
             Toast("No File Selected", "error", localStorage.getItem("theme") || "dark")
             return;
@@ -73,14 +73,14 @@ function Upload({ choose }) {
     }
     return (
         <div className={"upload" + (choose === "Upload" ? "" : " disnone")}>
-            <Img fileref={fileRef} setFile={setFile} less={file !== null} setper={setuper} uploading={uploading} setuploading={setUploading} setoutput={setOutput}/>
+            <Img fileref={fileRef} setFile={setFile} less={file !== null} setper={setuper} uploading={uploading} setuploading={setUploading} setoutput={setOutput} />
             {
                 file === null ? file :
                     <div className="file">
                         <Status file={file} per={uper} />
-                        {uploading || output !== null ? null : <Options setccodestatus={setccodestatus} ccref={ccRef} dodref={dodRef} ccodestatus={ccodestatus}/>}
+                        {uploading || output !== null ? null : <Options setccodestatus={setccodestatus} ccref={ccRef} dodref={dodRef} ccodestatus={ccodestatus} />}
                         {uploading || output !== null ? null : <Submit submit={submit} />}
-                        { output === null ? output : <Output data={output}/>}
+                        {output === null ? output : <Output data={output} />}
                     </div>
             }
 

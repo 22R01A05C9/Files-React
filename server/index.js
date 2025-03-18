@@ -9,12 +9,11 @@ app.use(function (req, res, next) {
         next()
     } catch (err) {
         //change after backend
-        res.redirect("https://saiteja.fun")
+        res.redirect("https://saiteja.site")
     }
 })
 app.use(cors())
-app.use(express.json({limit:"50mb"}))
-
+app.use(express.json({ limit: "50mb" }))
 require("./files.js")(app)
 require("./feedback.js")(app)
 

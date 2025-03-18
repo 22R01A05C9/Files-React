@@ -1,11 +1,11 @@
 import Toast from "../helpers/toast"
-const ccodeinp = (e, setccodestatus)=>{
+const ccodeinp = (e, setccodestatus) => {
     e.target.classList.remove("red")
     e.target.classList.remove("green")
     setccodestatus(false)
     let val = e.target.value;
-    if(val.length > 4){
-        e.target.value = val.slice(0,4)
+    if (val.length > 4) {
+        e.target.value = val.slice(0, 4)
     }
 }
 
@@ -13,27 +13,27 @@ const verifycc = (ccref, setccodestatus) => {
     let ccode = ccref.current.querySelector("#ccode");
     let regexp = /^[0-9]{4}$/;
     let code = ccode.value;
-    if(!regexp.test(code)){
-        Toast("Invalid Code","error",localStorage.getItem("theme") || "dark")
+    if (!regexp.test(code)) {
+        Toast("Invalid Code", "error", localStorage.getItem("theme") || "dark")
         ccode.classList.add("red")
         return;
     }
-    fetch("/api/files/cverify",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
+    fetch("/api/files/cverify", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
         },
-        body:JSON.stringify({
-            ccode:code
+        body: JSON.stringify({
+            ccode: code
         })
-    }).then(res=>res.json()).then((res)=>{
+    }).then(res => res.json()).then((res) => {
         setccodestatus(res.status)
-        if(res.status === false){
-            Toast(res.message,"warn",localStorage.getItem("theme") || "dark");
+        if (res.status === false) {
+            Toast(res.message, "warn", localStorage.getItem("theme") || "dark");
             ccode.classList.add("red")
             ccode.classList.remove("green")
-        }else{
-            Toast(res.message,"success",localStorage.getItem("theme") || "dark")
+        } else {
+            Toast(res.message, "success", localStorage.getItem("theme") || "dark")
             ccode.classList.remove("red")
             ccode.classList.add("green")
         }
@@ -50,4 +50,4 @@ const clickedoptions = (e, optionsRef) => {
         svg.classList.remove("normal")
     }
 }
-export {ccodeinp, verifycc, clickedoptions}
+export { ccodeinp, verifycc, clickedoptions }
